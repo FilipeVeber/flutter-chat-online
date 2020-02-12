@@ -18,6 +18,8 @@ class _ChatScreenState extends State<ChatScreen> {
   final GoogleSignIn _googleSignIn = GoogleSignIn();
   FirebaseUser _currentUser;
 
+  bool _isUploadingImage = false;
+
   @override
   void initState() {
     super.initState();
@@ -80,6 +82,7 @@ class _ChatScreenState extends State<ChatScreen> {
                         );
                     }
                   })),
+          _isUploadingImage ? LinearProgressIndicator() : Container(),
           TextComposer(_sendMessage)
         ],
       ),
@@ -139,8 +142,16 @@ class _ChatScreenState extends State<ChatScreen> {
           .child(DateTime.now().millisecondsSinceEpoch.toString())
           .putFile(imageFile);
 
+      setState(() {
+        _isUploadingImage = true;
+      });
+
       StorageTaskSnapshot taskSnapshot = await task.onComplete;
       data["imageURL"] = await taskSnapshot.ref.getDownloadURL();
+
+      setState(() {
+        _isUploadingImage = false;
+      });
     }
 
     if (text != null) {
