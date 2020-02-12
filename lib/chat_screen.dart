@@ -13,7 +13,9 @@ class _ChatScreenState extends State<ChatScreen> {
       appBar: AppBar(
         title: Text("Olá"),
       ),
-      body: TextComposer(),
+      body: TextComposer((text) {
+        print(text);
+      }),
     );
   }
 }

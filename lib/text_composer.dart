@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 
 class TextComposer extends StatefulWidget {
+  TextComposer(this.sendMessage);
+
+  Function(String) sendMessage;
+
   @override
   _TextComposerState createState() => _TextComposerState();
 }
@@ -27,7 +31,9 @@ class _TextComposerState extends State<TextComposer> {
                   _isComposing = value.isNotEmpty;
                 });
               },
-              onSubmitted: (value) {},
+              onSubmitted: (value) {
+                widget.sendMessage(value);
+              },
             ),
           ),
           IconButton(
