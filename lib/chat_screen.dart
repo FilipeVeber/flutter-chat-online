@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_online/text_composer.dart';
 
@@ -13,9 +14,14 @@ class _ChatScreenState extends State<ChatScreen> {
       appBar: AppBar(
         title: Text("Olá"),
       ),
-      body: TextComposer((text) {
-        print(text);
-      }),
+      body: TextComposer(_sendMessage),
     );
+  }
+
+  void _sendMessage(String text) {
+    Firestore.instance
+        .collection("messages")
+        .document()
+        .setData({"text": text});
   }
 }
