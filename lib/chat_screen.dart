@@ -57,7 +57,10 @@ class _ChatScreenState extends State<ChatScreen> {
         children: <Widget>[
           Expanded(
               child: StreamBuilder<QuerySnapshot>(
-                  stream: Firestore.instance.collection("messages").snapshots(),
+                  stream: Firestore.instance
+                      .collection("messages")
+                      .orderBy("time")
+                      .snapshots(),
                   builder: (context, snapshot) {
                     switch (snapshot.connectionState) {
                       case ConnectionState.none:
@@ -126,7 +129,8 @@ class _ChatScreenState extends State<ChatScreen> {
     Map<String, dynamic> data = {
       "uid": user.uid,
       "senderName": user.displayName,
-      "senderPhotoURL": user.photoUrl
+      "senderPhotoURL": user.photoUrl,
+      "time": Timestamp.now()
     };
 
     if (imageFile != null) {
