@@ -77,7 +77,10 @@ class _ChatScreenState extends State<ChatScreen> {
                           itemCount: documents.length,
                           reverse: true,
                           itemBuilder: (context, index) {
-                            return ChatMessage(documents[index].data, true);
+                            return ChatMessage(
+                                documents[index].data,
+                                documents[index].data["uid"] ==
+                                    _currentUser?.uid);
                           },
                         );
                     }
